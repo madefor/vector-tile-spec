@@ -24,8 +24,8 @@ This document specifies a space-efficient encoding format for tiled geographic v
 The Vector Tile format uses [Google Protocol Buffers](https://developers.google.com/protocol-buffers/) as a encoding format. Protocol Buffers are a language-neutral, platform-neutral extensible mechanism for serializing structured data.
 -->
 
-そのベクトルタイルフォーマットは、[Google Protocol Buffers](https://developers.google.com/protocol-buffers/) をエンコーディングフォーマットとして使用する。
-Protocol Buffers は、後続化されたデータを格納するための、特定の言語やプラットフォームに依存しない拡張可能な仕組みです。
+このベクトルタイルフォーマットは、[Google Protocol Buffers](https://developers.google.com/protocol-buffers/) をエンコーディングフォーマットとして使用する。
+Protocol Buffers は、構造化されたデータを格納するための特定の言語やプラットフォームに依存しない拡張可能な仕組みである。
 
 <!--
 ### 2.1. File Extension
@@ -55,13 +55,13 @@ When serving Vector Tiles the MIME type SHOULD be `application/vnd.mapbox-vector
 ## 3. Projection and Bounds
 -->
 
-## 3. Projection 及び Bounds
+## 3. 地図図法 (Projection) 及び境界 (Bounds)
 
 <!--
 A Vector Tile represents data based on a square extent within a projection. A Vector Tile SHOULD NOT contain information about its bounds and projection. The file format assumes that the decoder knows the bounds and projection of a Vector Tile before decoding it.
 -->
 
-ベクトルタイルは Projection 内の四角い範囲内に基づいたデータを再現する。ベクトルタイルには、その Bounds や Projection に関する情報を含め**ないほうがよい**。このファイル形式は、デコーダーがこれを復号化する前に Bounds や Projection を知っていることを前提としている。
+ベクトルタイルは地図図法における四角い範囲内に基づいたデータを再現する。ベクトルタイルには、その境界や地図図法に関する情報を含め**ないほうがよい**。このファイル形式は、デコーダーがこれを復号化する前に境界や地図図法を知っていることを前提としている。
 
 <!--
 [Web Mercator](https://en.wikipedia.org/wiki/Web_Mercator) is the projection of reference, and [the Google tile scheme](http://www.maptiler.org/google-maps-coordinates-tile-bounds-projection/) is the tile extent convention of reference. Together, they provide a 1-to-1 relationship between a specific geographical area, at a specific level of detail, and a path such as `https://example.com/17/65535/43602.mvt`.
@@ -87,11 +87,23 @@ This specification describes the structure of data within a Vector Tile. The rea
 
 この仕様書では、ベクトルタイル内のデータ構造について明らかにする。読者は [Vector Tile protobuf schema document](vector_tile.proto) と、それが定義する構造について理解している必要がある。
 
+<!--
 ### 4.1. Layers
+-->
 
+### 4.1. レイヤー
+
+<!--
 A Vector Tile consists of a set of named layers. A layer contains geometric features and their metadata. The layer format is designed so that the data required for a layer is contiguous in memory, and so that layers can be appended to a Vector Tile without modifying existing data.
+-->
 
+ベクトルタイルは、名前付きのレイヤーのセットで構成されている。レイヤーは地理的構造物とそのメタデータを含んでいる。レイヤーフォーマットは、レイヤーが必要とするデータがメモリ内で連続し、既存のデータを変更することなくベクトルタイルにレイヤーが追加されるように設計されている。
+
+<!--
 A Vector Tile SHOULD contain at least one layer. A layer SHOULD contain at least one feature.
+-->
+
+ベクトルタイルは少なくともひとつのレイヤーを含む必要がある。レイヤーは少なくとも1つの構造物を含むべきである。
 
 A layer MUST contain a `version` field with the major version number of the Vector Tile specification to which the layer adheres. For example, a layer adhering to version 2.1 of the specification contains a `version` field with the integer value `2`. The `version` field SHOULD be the first field within the layer. Decoders SHOULD parse the `version` first to ensure that they are capable of decoding each layer. When a Vector Tile consumer encounters a Vector Tile layer with an unknown version, it MAY make a best-effort attempt to interpret the layer, or it MAY skip the layer. In either case it SHOULD continue to process subsequent layers in the Vector Tile.
 
