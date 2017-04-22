@@ -97,7 +97,7 @@ This specification describes the structure of data within a Vector Tile. The rea
 A Vector Tile consists of a set of named layers. A layer contains geometric features and their metadata. The layer format is designed so that the data required for a layer is contiguous in memory, and so that layers can be appended to a Vector Tile without modifying existing data.
 -->
 
-ベクトルタイルは、名前付きのレイヤーのセットで構成されている。レイヤーは幾何属性のある地物とそのメタデータを含んでいる。レイヤーフォーマットは、レイヤーが必要とするデータがメモリ内で連続し、既存のデータを変更することなくベクトルタイルにレイヤーが追加されるように設計されている。
+ベクトルタイルは、名前付きのレイヤーのセットで構成されている。レイヤーは幾何属性のある地物とそのメタデータを含んでいる。レイヤのフォーマットは、ひとつのレイヤに必要なデータが記憶領域内で接するように設計されている。このようにすることによって、既存のデータを変更することなく、レイヤがベクトルタイルに追加できる。
 
 <!--
 A Vector Tile SHOULD contain at least one layer. A layer SHOULD contain at least one feature.
