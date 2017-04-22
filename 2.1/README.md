@@ -1,4 +1,4 @@
-# Vector Tile Specification
+# ベクトルタイル仕様書
 
 このドキュメントに記載されている単語 "しなければならない (MUST)"、"してはならない (MUST NOT)"、"要求されている (REQUIRED)"、"することになる (SHALL)"、"することはない (SHALL NOT)"、"する必要がある (SHOULD)"、"しないほうがよい (SHOULD NOT)"、"推奨される (RECOMMENDED)"、"してもよい (MAY)"、"選択できる (OPTIONAL)" は、 [RFC 2119](https://www.ietf.org/rfc/rfc2119.txt) に記述されているとおりに解釈されるものとします。
 
