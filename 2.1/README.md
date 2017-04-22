@@ -111,11 +111,23 @@ A layer MUST contain a `version` field with the major version number of the Vect
 
 レイヤーは、そのレイヤーが準拠するベクトルタイル仕様書と同じメジャーバージョン番号を持つ `version` フィールドを含んで**いなければならない**。たとえば、あるレイヤーがバージョン 2.1 に準拠しているのであれば、整数の `2` を `version` フィールドとして含めるべきである。`version` フィールドは、そのレイヤーの最初のフィールドである**必要がある**。デコーダーは、各レイヤーを確実にパースするために、まず `version` をパースする**必要がある**。ベクトルタイルのコンシューマーが未知のバージョンのベクトルタイルに遭遇した場合、レイヤーを解釈するために最善の努力をするか、そのレイヤーをスキップ**してもよい**。どちらの場合も、そのベクトルタイル内の後続のレイヤーの処理を続ける**必要がある**。
 
+<!--
 A layer MUST contain a `name` field. A Vector Tile MUST NOT contain two or more layers whose `name` values are byte-for-byte identical. Prior to appending a layer to an existing Vector Tile, an encoder MUST check the existing `name` fields in order to prevent duplication.
+-->
 
+レイヤーは `name` フィールドを含んで**いなければならない**。ベクトルタイルは、同じ値 (byte-for-byte) を名前に持つ2つ以上のレイヤーを含んでは**ならない**。エンコーダーは、既存のベクトルタイルにレイヤーを追加する前に、重複を防止するために既存の `name` フィールドをチェック**しなければならない**。
+
+<!--
 Each feature in a layer (see below) may have one or more key-value pairs as its metadata. The keys and values are indices into two lists, `keys` and `values`, that are shared across the layer's features.
+-->
 
+レイヤー内の地物（以下を参照）一つまたは複数のキーと値のペアーをメタデータとして保持**してもよい**。キーと値は `keys` と `values` という2つのリストのインデックスで、レイヤーの地物をまたがって共有される。
+
+<!--
 Each element in the `keys` field of the layer is a string. The `keys` include all the keys of features used in the layer, and each key may be referenced by its positional index in this set of `keys`, with the first key having an index of 0. The set of `keys` SHOULD NOT contain two or more values which are byte-for-byte identical.
+-->
+
+`keys` フィールド内の個々の要素は文字列である。`keys` は、レイヤー内で使用される地物のすべてのキーを含んでおり、それぞれのキーは位置インデックスによって参照され、最初のキーは 0 というインデックスをもっている。`keys` のセットは、2つ以上の同じ値 (byte-for-byte) を含ま**ないほうがよい**。
 
 Each element in the `values` field of the layer encodes a value of any of several types (see below). The `values` represent all the values of features used in the layer, and each value may be referenced by its positional index in this set of `values`, with the first value having an index of 0. The set of `values` SHOULD NOT contain two or more values of the same type which are byte-for-byte identical.
 
