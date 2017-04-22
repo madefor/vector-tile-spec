@@ -12,7 +12,7 @@
 This document specifies a space-efficient encoding format for tiled geographic vector data. It is designed to be used in browsers or server-side applications for fast rendering or lookups of feature data.
 -->
 
-このドキュメントでは、タイル化された地理ベクトルデータのスペース効率のよいエンコーディングフォーマットの仕様を策定する。それはブラウザ及びサーバーサイドアプリケーションでの高速なレンダリングやデータの検索のために設計されている。
+このドキュメントでは、タイル化された地理的ベクトルデータのスペース効率のよいエンコーディングフォーマットの仕様を策定する。それはブラウザ及びサーバーサイドアプリケーションでの高速なレンダリングやデータの検索のために設計されている。
 
 <!--
 ## 2. File Format
@@ -55,25 +55,25 @@ When serving Vector Tiles the MIME type SHOULD be `application/vnd.mapbox-vector
 ## 3. Projection and Bounds
 -->
 
-## 3. 地図図法 (Projection) 及び境界 (Bounds)
+## 3. 投影法 (Projection) 及び境界 (Bounds)
 
 <!--
 A Vector Tile represents data based on a square extent within a projection. A Vector Tile SHOULD NOT contain information about its bounds and projection. The file format assumes that the decoder knows the bounds and projection of a Vector Tile before decoding it.
 -->
 
-ベクトルタイルは地図図法における四角い範囲内に基づいたデータを再現する。ベクトルタイルには、その境界や地図図法に関する情報を含め**ないほうがよい**。このファイル形式は、デコーダーがこれを復号化する前に境界や地図図法を知っていることを前提としている。
+ベクトルタイルは投影法における四角い範囲内に基づいたデータを再現する。ベクトルタイルには、その境界や投影法に関する情報を含め**ないほうがよい**。このファイル形式は、デコーダーがこれを復号化する前に境界や投影法を知っていることを前提としている。
 
 <!--
 [Web Mercator](https://en.wikipedia.org/wiki/Web_Mercator) is the projection of reference, and [the Google tile scheme](http://www.maptiler.org/google-maps-coordinates-tile-bounds-projection/) is the tile extent convention of reference. Together, they provide a 1-to-1 relationship between a specific geographical area, at a specific level of detail, and a path such as `https://example.com/17/65535/43602.mvt`.
 -->
 
-[Web メルカトル](https://en.wikipedia.org/wiki/Web_Mercator) は地図図法の一例で、[the Google tile scheme](http://www.maptiler.org/google-maps-coordinates-tile-bounds-projection/) はタイル地図の基準の一例である。これらは、特定の詳細レベルにおける指定した地理空間と `https://example.com/17/65535/43602.mvt` のようなパスを一対一で紐付けるものである。
+[Web メルカトル](https://en.wikipedia.org/wiki/Web_Mercator) は投影法の一例で、[the Google tile scheme](http://www.maptiler.org/google-maps-coordinates-tile-bounds-projection/) はタイル地図の基準の一例である。これらは、特定の詳細レベルにおける指定した地理的領域と `https://example.com/17/65535/43602.mvt` のようなパスを一対一で紐付けるものである。
 
 <!--
 Vector Tiles MAY be used to represent data with any projection and tile extent scheme.
 -->
 
-ベクトルタイルは、任意の地図図法やタイル地図の仕様を用いて地理データを表現するために使用**してもよい**。
+ベクトルタイルは、任意の投影法やタイル地図の仕様を用いて地理データを表現するために使用**してもよい**。
 
 <!--
 ## 4. Internal Structure
@@ -97,13 +97,13 @@ This specification describes the structure of data within a Vector Tile. The rea
 A Vector Tile consists of a set of named layers. A layer contains geometric features and their metadata. The layer format is designed so that the data required for a layer is contiguous in memory, and so that layers can be appended to a Vector Tile without modifying existing data.
 -->
 
-ベクトルタイルは、名前付きのレイヤーのセットで構成されている。レイヤーは地理的構造物とそのメタデータを含んでいる。レイヤーフォーマットは、レイヤーが必要とするデータがメモリ内で連続し、既存のデータを変更することなくベクトルタイルにレイヤーが追加されるように設計されている。
+ベクトルタイルは、名前付きのレイヤーのセットで構成されている。レイヤーは幾何属性のある地物とそのメタデータを含んでいる。レイヤーフォーマットは、レイヤーが必要とするデータがメモリ内で連続し、既存のデータを変更することなくベクトルタイルにレイヤーが追加されるように設計されている。
 
 <!--
 A Vector Tile SHOULD contain at least one layer. A layer SHOULD contain at least one feature.
 -->
 
-ベクトルタイルは少なくともひとつのレイヤーを含む必要がある。レイヤーは少なくとも1つの構造物を含むべきである。
+ベクトルタイルは少なくともひとつのレイヤーを含む必要がある。レイヤーは少なくとも1つの地物を含むべきである。
 
 A layer MUST contain a `version` field with the major version number of the Vector Tile specification to which the layer adheres. For example, a layer adhering to version 2.1 of the specification contains a `version` field with the integer value `2`. The `version` field SHOULD be the first field within the layer. Decoders SHOULD parse the `version` first to ensure that they are capable of decoding each layer. When a Vector Tile consumer encounters a Vector Tile layer with an unknown version, it MAY make a best-effort attempt to interpret the layer, or it MAY skip the layer. In either case it SHOULD continue to process subsequent layers in the Vector Tile.
 
