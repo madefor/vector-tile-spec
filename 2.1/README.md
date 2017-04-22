@@ -1,36 +1,91 @@
 # Vector Tile Specification
 
-The key words "MUST", "MUST NOT", "REQUIRED", "SHALL", "SHALL NOT",
-"SHOULD", "SHOULD NOT", "RECOMMENDED", "MAY", and "OPTIONAL" in
-this document are to be interpreted as described in [RFC 2119](https://www.ietf.org/rfc/rfc2119.txt).
+このドキュメントに記載されている単語 "しなければならない (MUST)"、"してはならない (MUST NOT)"、"要求されている (REQUIRED)"、"することになる (SHALL)"、"することはない (SHALL NOT)"、"する必要がある (SHOULD)"、"しないほうがよい (SHOULD NOT)"、"推奨される (RECOMMENDED)"、"してもよい (MAY)"、"選択できる (OPTIONAL)" は、 [RFC 2119](https://www.ietf.org/rfc/rfc2119.txt) に記述されているとおりに解釈されるものとします。
 
+<!--
 ## 1. Purpose
+-->
 
+## 1. 目的
+
+<!--
 This document specifies a space-efficient encoding format for tiled geographic vector data. It is designed to be used in browsers or server-side applications for fast rendering or lookups of feature data.
+-->
 
+このドキュメントでは、タイル化された地理ベクトルデータのスペース効率のよいエンコーディングフォーマットの仕様を策定する。それはブラウザ及びサーバーサイドアプリケーションでの高速なレンダリングやデータの検索のために設計されている。
+
+<!--
 ## 2. File Format
+-->
 
+## 2. ファイルフォーマット
+
+<!--
 The Vector Tile format uses [Google Protocol Buffers](https://developers.google.com/protocol-buffers/) as a encoding format. Protocol Buffers are a language-neutral, platform-neutral extensible mechanism for serializing structured data.
+-->
 
+そのベクトルタイルフォーマットは、[Google Protocol Buffers](https://developers.google.com/protocol-buffers/) をエンコーディングフォーマットとして使用する。
+Protocol Buffers は、後続化されたデータを格納するための、特定の言語やプラットフォームに依存しない拡張可能な仕組みです。
+
+<!--
 ### 2.1. File Extension
+-->
 
+### 2.1. ファイルの拡張子
+
+<!--
 The filename extension for Vector Tile files SHOULD be `mvt`. For example, a file might be named `vector.mvt`.
+-->
 
+ベクトルタイルファイルの拡張子は `mvt` にする**必要がある**。たとえば、あるファイルは `vector.mvt` となるであろう。
+
+<!--
 ### 2.2. Multipurpose Internet Mail Extensions (MIME)
+-->
 
+### 2.2. MIME タイプ (MIME)
+
+<!--
 When serving Vector Tiles the MIME type SHOULD be `application/vnd.mapbox-vector-tile`.
+-->
 
+ベクトルタイルを配信する際の MIME タイプは `application/vnd.mapbox-vector-tile` とする**必要がある**。
+
+<!--
 ## 3. Projection and Bounds
+-->
 
+## 3. Projection 及び Bounds
+
+<!--
 A Vector Tile represents data based on a square extent within a projection. A Vector Tile SHOULD NOT contain information about its bounds and projection. The file format assumes that the decoder knows the bounds and projection of a Vector Tile before decoding it.
+-->
 
+ベクトルタイルは Projection 内の四角い範囲内に基づいたデータを再現する。ベクトルタイルには、その Bounds や Projection に関する情報を含め**ないほうがよい**。このファイル形式は、デコーダーがこれを復号化する前に Bounds や Projection を知っていることを前提としている。
+
+<!--
 [Web Mercator](https://en.wikipedia.org/wiki/Web_Mercator) is the projection of reference, and [the Google tile scheme](http://www.maptiler.org/google-maps-coordinates-tile-bounds-projection/) is the tile extent convention of reference. Together, they provide a 1-to-1 relationship between a specific geographical area, at a specific level of detail, and a path such as `https://example.com/17/65535/43602.mvt`.
+-->
 
+[Web メルカトル](https://en.wikipedia.org/wiki/Web_Mercator) は地図図法の一例で、[the Google tile scheme](http://www.maptiler.org/google-maps-coordinates-tile-bounds-projection/) はタイル地図の基準の一例である。これらは、特定の詳細レベルにおける指定した地理空間と `https://example.com/17/65535/43602.mvt` のようなパスを一対一で紐付けるものである。
+
+<!--
 Vector Tiles MAY be used to represent data with any projection and tile extent scheme.
+-->
 
+ベクトルタイルは、任意の地図図法やタイル地図の仕様を用いて地理データを表現するために使用**してもよい**。
+
+<!--
 ## 4. Internal Structure
+-->
 
+## 4. 内部構造
+
+<!--
 This specification describes the structure of data within a Vector Tile. The reader should have an understanding of the [Vector Tile protobuf schema document](vector_tile.proto) and the structures it defines.
+-->
+
+この仕様書では、ベクトルタイル内のデータ構造について明らかにする。読者は [Vector Tile protobuf schema document](vector_tile.proto) と、それが定義する構造について理解している必要がある。
 
 ### 4.1. Layers
 
@@ -183,7 +238,7 @@ If the `MoveTo` command for a `POINT` geometry has a command count of 1, then th
 
 ##### 4.3.4.3. Linestring Geometry Type
 
-The `LINESTRING` geometry type encodes a linestring or multilinestring geometry. The geometry command sequence for a linestring geometry MUST consist of one or more repetitions of the following sequence: 
+The `LINESTRING` geometry type encodes a linestring or multilinestring geometry. The geometry command sequence for a linestring geometry MUST consist of one or more repetitions of the following sequence:
 
 1. A `MoveTo` command with a command count of 1
 2. A `LineTo` command with a command count greater than 0
