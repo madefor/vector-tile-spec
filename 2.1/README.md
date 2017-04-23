@@ -153,15 +153,35 @@ For example, if a tile has an `extent` of 4096, coordinate units within the tile
 
 たとえば、あるタイルが 4096 という値の `extent` を持っている場合、タイル内の座標は正方形の 1/4096 となる。座標 0 はタイルの左上の角にあり、4096 は右下の角にある。1 から 4095 までの座標は完全にタイルの範囲内にあり、0 より小さいか 4096 より大きい座標はタイルの範囲外です。座標 `(1,10)` または `(4095,10)` のポイントはタイルの範囲内にあり、`(0,10)` または `(4096,10)` のポイントはタイルの領域の端にあります。`(-1,10)` または `(4097,10)` のポイントはタイルの範囲外にあります。
 
+<!--
 ### 4.2. Features
+-->
 
+### 4.2. 地物
+
+<!--
 A feature MUST contain a `geometry` field.
+-->
 
+地物は、`geometry` フィールドを含まなければならない (MUST)。
+
+<!--
 A feature MUST contain a `type` field as described in the Geometry Types section.
+-->
 
+地物は、Geometry 型セクションで説明している `type` フィールドを含まなければならない (MUST)。
+
+<!--
 A feature MAY contain a `tags` field. Feature-level metadata, if any, SHOULD be stored in the `tags` field.
+-->
 
+地物は、`tags` フィールドを含むことができる (MAY)。地物固有のメタデータがもしあれば、`tags` フィールドに保存されるべきである (SHOULD)。
+
+<!--
 A feature MAY contain an `id` field. If a feature has an `id` field, the value of the `id` SHOULD be unique among the features of the parent layer.
+-->
+
+地物は、`id` フィールドを含むことができる (MAY)。もし地物が `id` フィールドを持っている場合、`id` フィールドの値は、親レイヤーの中で地物ごとにユニークであるべきである (SHOULD)。
 
 ### 4.3. Geometry Encoding
 
