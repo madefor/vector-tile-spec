@@ -209,11 +209,23 @@ Commands refer to positions relative to a "cursor", which is a redefinable point
 
 #### 4.3.1. Command Integers
 
+<!--
 A `CommandInteger` indicates a command to be executed, as a command ID, and the number of times that the command will be executed, as a command count.
+-->
 
+`CommandInteger` は、コマンド ID で実行されるコマンドを指示し、コマンドカウントで実行されるコマンドの実行回数を指示する。
+
+<!--
 A command ID is encoded as an unsigned integer in the least significant 3 bits of the `CommandInteger`, and is in the range 0 through 7, inclusive. A command count is encoded as an unsigned integer in the remaining 29 bits of a `CommandInteger`, and is in the range `0` through `pow(2, 29) - 1`, inclusive.
+-->
 
+コマンド ID は、`CommandInteger`の最下位 3 ビットの符号なし整数として符号化され、0〜7 の範囲内にある。 コマンドカウントは、`CommandInteger` の残りの29ビットの符号なし整数として符号化され、`0` から `pow（2, 29）- 1` の範囲内にある。
+
+<!--
 A command ID, a command count, and a `CommandInteger` are related by these bitwise operations:
+-->
+
+コマンド ID、コマンドカウント、および `CommandInteger` は、これらのビット操作によって関連付けられる:
 
 ```javascript
 CommandInteger = (id & 0x7) | (count << 3)
@@ -227,7 +239,11 @@ id = CommandInteger & 0x7
 count = CommandInteger >> 3
 ```
 
+<!--
 A command ID specifies one of the following commands:
+-->
+
+コマンド ID は、以下のコマンドのうちの一つを指定する:
 
 |  Command     |  Id  | Parameters    | Parameter Count |
 | ------------ |:----:| ------------- | --------------- |
@@ -235,7 +251,11 @@ A command ID specifies one of the following commands:
 | LineTo       | `2`  | `dX`, `dY`    | 2               |
 | ClosePath    | `7`  | No parameters | 0               |
 
+<!--
 ##### Example Command Integers
+-->
+
+##### Command Integers の例
 
 | Command   |  ID  | Count | CommandInteger | Binary Representation `[Count][Id]`      |
 | --------- |:----:|:-----:|:--------------:|:----------------------------------------:|
