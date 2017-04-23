@@ -183,13 +183,29 @@ A feature MAY contain an `id` field. If a feature has an `id` field, the value o
 
 地物は、`id` フィールドを含むことができる (MAY)。もし地物が `id` フィールドを持っている場合、`id` フィールドの値は、親レイヤーの中で地物ごとにユニークであるべきである (SHOULD)。
 
+<!--
 ### 4.3. Geometry Encoding
+-->
 
+### 4.3. ジオメトリエンコーディング
+
+<!--
 Geometry data in a Vector Tile is defined in a screen coordinate system. The upper left corner of the tile (as displayed by default) is the origin of the coordinate system. The X axis is positive to the right, and the Y axis is positive downward. Coordinates within a geometry MUST be integers.
+-->
 
+ベクトルタイル内のジオメトリデータは、スクリーンの座標システムで定義される。（デフォルトで表示される）タイルの最も左上は、座標システムの原点である。X 座標は右に正であり、Y 座標は下に正である。ジオメトリ内の座標は整数でなければならない (MUST)。
+
+<!--
 A geometry is encoded as a sequence of 32 bit unsigned integers in the `geometry` field of a feature. Each integer is either a `CommandInteger` or a `ParameterInteger`. A decoder interprets these as an ordered series of operations to generate the geometry.
+-->
 
+ジオメトリは、地物の `geometry` フィールド内に、32 bit 符号なし整数のシーケンスとしてエンコードされる。各整数は、`CommandInteger` か `ParameterInteger` である。デコーダはこれらをジオメトリを生成するために順番に処理するものとして解釈する。
+
+<!--
 Commands refer to positions relative to a "cursor", which is a redefinable point. For the first command in a feature, the cursor is at `(0,0)` in the coordinate system. Some commands move the cursor, affecting subsequent commands.
+-->
+
+コマンドは、"カーソル"位置を再定義可能な点である相対的な位置で参照する。地物の最初のコマンドでは、カーソルは座標システムでの `(0,0)` にある。一部のコマンドはカーソルを移動し、その後のコマンドに影響を与える。
 
 #### 4.3.1. Command Integers
 
