@@ -129,13 +129,29 @@ Each element in the `keys` field of the layer is a string. The `keys` include al
 
 `keys` フィールド内の個々の要素は文字列である。`keys` は、レイヤー内で使用される地物のすべてのキーを含んでおり、それぞれのキーは位置インデックスによって参照され、最初のキーは 0 というインデックスをもっている。`keys` のセットは、2つ以上の同じ値 (byte-for-byte) を含まないほうがよい (SHOULD NOT)。
 
+<!--
 Each element in the `values` field of the layer encodes a value of any of several types (see below). The `values` represent all the values of features used in the layer, and each value may be referenced by its positional index in this set of `values`, with the first value having an index of 0. The set of `values` SHOULD NOT contain two or more values of the same type which are byte-for-byte identical.
+-->
 
+`values` フィールド内のそれぞれの要素は、あらゆるデータ型がエンコードされている（以下を参照）。`values` は、レイヤー内で使用されるすべての値が再現されており、それぞれのキーは位置インデックスによって参照され、最初のキーは 0 というインデックスをもっている。`values` のセットは、2つ以上の同じ値 (byte-for-byte) を含まないほうがよい (SHOULD NOT)。
+
+<!--
 In order to support values of varying string, boolean, integer, and floating point types, the protobuf encoding of the `value` field consists of a set of `optional` fields. A value MUST contain exactly one of these optional fields.
+-->
 
+boolean 型、integer 型、そして浮動小数点型などの異なるデータ型をサポートするために、`value` フィールドの Protocol Buffers エンコーディングは、`optional` フィールドのセットで構成されている。値はこれらのオプションフィールドのうちの一つだけが含まれなければならない (MUST)。
+
+<!--
 A layer MUST contain an `extent` that describes the width and height of the tile in integer coordinates. The geometries within the Vector Tile MAY extend past the bounds of the tile's area as defined by the `extent`. Geometries that extend past the tile's area as defined by `extent` are often used as a buffer for rendering features that overlap multiple adjacent tiles.
+-->
 
+レイヤーはタイルの幅と高さを記述するための整数による座標 `extent` を含んでいなければならない (MUST)。ベクタータイル内のジオメトリは、`extent` で定義されたタイル領域の境界を越えて延びてもよい (MAY)。`extent` で定義されたタイル領域を越えて延びるジオメトリは、隣接する複数のタイルに重なる地物をレンダリングするためのバッファとして使用されることが多い。
+
+<!--
 For example, if a tile has an `extent` of 4096, coordinate units within the tile refer to 1/4096th of its square dimensions. A coordinate of 0 is on the top or left edge of the tile, and a coordinate of 4096 is on the bottom or right edge. Coordinates from 1 through 4095 inclusive are fully within the extent of the tile, and coordinates less than 0 or greater than 4096 are fully outside the extent of the tile.  A point at `(1,10)` or `(4095,10)` is within the extent of the tile. A point at `(0,10)` or `(4096,10)` is on the edge of the extent. A point at `(-1,10)` or `(4097,10)` is outside the extent of the tile.
+-->
+
+たとえば、あるタイルが 4096 という値の `extent` を持っている場合、タイル内の座標は正方形の 1/4096 となる。座標 0 はタイルの左上の角にあり、4096 は右下の角にある。1 から 4095 までの座標は完全にタイルの範囲内にあり、0 より小さいか 4096 より大きい座標はタイルの範囲外です。座標 `(1,10)` または `(4095,10)` のポイントはタイルの範囲内にあり、`(0,10)` または `(4096,10)` のポイントはタイルの領域の端にあります。`(-1,10)` または `(4097,10)` のポイントはタイルの範囲外にあります。
 
 ### 4.2. Features
 
