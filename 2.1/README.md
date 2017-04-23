@@ -61,11 +61,7 @@ When serving Vector Tiles the MIME type SHOULD be `application/vnd.mapbox-vector
 A Vector Tile represents data based on a square extent within a projection. A Vector Tile SHOULD NOT contain information about its bounds and projection. The file format assumes that the decoder knows the bounds and projection of a Vector Tile before decoding it.
 -->
 
-<<<<<<< HEAD
-ベクトルタイルは特定の投影法のもとでの四角い領域のデータを表現する。ベクトルタイルには、その領域や投影法に関する情報を含め**ないほうがよい**。このファイル形式は、デコーダーがこれを復号化する前に領域や投影法を知っていることを前提としている。
-=======
-ベクトルタイルは投影法における四角い範囲内に基づいたデータを再現する。ベクトルタイルには、その境界や投影法に関する情報を含めないほうがよい (SHOULD NOT)。このファイル形式は、デコーダーがこれを復号化する前に境界や投影法を知っていることを前提としている。
->>>>>>> japanese
+ベクトルタイルは特定の投影法のもとでの四角い領域のデータを表現する。ベクトルタイルには、その領域や投影法に関する情報を含めないほうがよい (SHOULD NOT)。このファイル形式は、デコーダーがこれを復号化する前に領域や投影法を知っていることを前提としている。
 
 <!--
 [Web Mercator](https://en.wikipedia.org/wiki/Web_Mercator) is the projection of reference, and [the Google tile scheme](http://www.maptiler.org/google-maps-coordinates-tile-bounds-projection/) is the tile extent convention of reference. Together, they provide a 1-to-1 relationship between a specific geographical area, at a specific level of detail, and a path such as `https://example.com/17/65535/43602.mvt`.
@@ -77,11 +73,7 @@ A Vector Tile represents data based on a square extent within a projection. A Ve
 Vector Tiles MAY be used to represent data with any projection and tile extent scheme.
 -->
 
-<<<<<<< HEAD
-ベクトルタイルは、どのような投影法やタイル領域のスキームを用いた地理データの表現にも使用**してもよい**。
-=======
-ベクトルタイルは、任意の投影法やタイル地図の仕様を用いて地理データを表現するために使用してもよい (MAY)。
->>>>>>> japanese
+ベクトルタイルは、どのような投影法やタイル領域のスキームを用いた地理データの表現にも使用してもよい (MAY)。
 
 <!--
 ## 4. Internal Structure
