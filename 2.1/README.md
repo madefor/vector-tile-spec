@@ -151,7 +151,7 @@ A layer MUST contain an `extent` that describes the width and height of the tile
 For example, if a tile has an `extent` of 4096, coordinate units within the tile refer to 1/4096th of its square dimensions. A coordinate of 0 is on the top or left edge of the tile, and a coordinate of 4096 is on the bottom or right edge. Coordinates from 1 through 4095 inclusive are fully within the extent of the tile, and coordinates less than 0 or greater than 4096 are fully outside the extent of the tile.  A point at `(1,10)` or `(4095,10)` is within the extent of the tile. A point at `(0,10)` or `(4096,10)` is on the edge of the extent. A point at `(-1,10)` or `(4097,10)` is outside the extent of the tile.
 -->
 
-たとえば、あるタイルが 4096 という値の `extent` を持っている場合、タイル内の座標は正方形の 1/4096 となる。座標 0 はタイルの左上の角にあり、4096 は右下の角にある。1 から 4095 までの座標は完全にタイルの範囲内にあり、0 より小さいか 4096 より大きい座標はタイルの範囲外である。座標 `(1,10)` または `(4095,10)` のポイントはタイルの範囲内にあり、`(0,10)` または `(4096,10)` のポイントはタイルの領域の端にあります。`(-1,10)` または `(4097,10)` のポイントはタイルの範囲外にある。
+たとえば、あるタイルが 4096 という値の `extent` を持っている場合、タイル内の座標は正方形の 1/4096 となる。座標 0 はタイルの左上の角にあり、4096 は右下の角にある。1 から 4095 までの座標は完全にタイルの領域内にあり、0 より小さいか 4096 より大きい座標はタイルの領域外である。座標 `(1,10)` または `(4095,10)` のポイントはタイルの領域内にあり、`(0,10)` または `(4096,10)` のポイントはタイルの領域の端にある。`(-1,10)` または `(4097,10)` のポイントはタイルの領域外にある。
 
 <!--
 ### 4.2. Features
