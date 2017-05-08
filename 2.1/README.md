@@ -265,12 +265,23 @@ A command ID specifies one of the following commands:
 | LineTo    | `2`  | `3`   | `26`           | `[00000000 00000000 0000000 00011][010]` |
 | ClosePath | `7`  | `1`   | `15`           | `[00000000 00000000 0000000 00001][111]` |
 
+<!--
+#### 4.3.2. Parameter Integer
+-->
 
-#### 4.3.2. Parameter Integers
+#### 4.3.2. 数値パラメーター
 
+<!--
 Commands requiring parameters are followed by a `ParameterInteger` for each parameter required by that command. The number of `ParameterIntegers` that follow a `CommandInteger` is equal to the parameter count of a command multiplied by the command count of the `CommandInteger`. For example, a `CommandInteger` with a `MoveTo` command with a command count of 3 will be followed by 6 `ParameterIntegers`.
+-->
 
+パラメータを必要とするコマンドの後には、そのコマンドで必要とされる各パラメータのための `ParameterInteger` がつづく。`CommandInteger` につづく `ParameterIntegers`の数は、 `CommandInteger` のコマンドカウントを掛けたコマンドのパラメータ数に等しい。たとえば、コマンドカウントが3の `MoveTo` コマンドを含む `CommandInteger` の後に6つの `ParameterIntegers` が続きます。
+
+<!--
 A `ParameterInteger` is [zigzag](https://developers.google.com/protocol-buffers/docs/encoding#types) encoded so that small negative and positive values are both encoded as small integers. To encode a parameter value to a `ParameterInteger` the following formula is used:
+-->
+
+数値パラメータは [ZigZag](https://developers.google.com/protocol-buffers/docs/encoding#types) でエンコードされており、小さな正と負の両方の整数がそれぞれ小さな整数としてエンコードされる。数値パラメータの値を `ParameterInteger` にエンコードするには以下の数式を使用する。
 
 ```javascript
 ParameterInteger = (value << 1) ^ (value >> 31)
