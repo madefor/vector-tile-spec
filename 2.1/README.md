@@ -287,44 +287,107 @@ A `ParameterInteger` is [zigzag](https://developers.google.com/protocol-buffers/
 ParameterInteger = (value << 1) ^ (value >> 31)
 ```
 
+<!--
 Parameter values greater than `pow(2,31) - 1` or less than `-1 * (pow(2,31) - 1)` are not supported.
+-->
 
+`pow(2,31) - 1` よりも大きい、または `-1 * (pow(2,31) - 1)` よりも小さいパラメータはサポートされていない。
+
+<!--
 The following formula is used to decode a `ParameterInteger` to a value:
+-->
+
+以下の関数は、`ParameterInteger` を値にデコードするものである。
 
 ```javascript
 value = ((ParameterInteger >> 1) ^ (-(ParameterInteger & 1)))
 ```
 
+<!--
 #### 4.3.3. Command Types
+-->
 
+#### 4.3.3. コマンドタイプ
+
+<!--
 For all descriptions of commands the initial position of the cursor shall be described to be at the coordinates `(cX, cY)` where `cX` is the position of the cursor on the X axis and `cY` is the position of the `cursor` on the Y axis.
+-->
 
+コマンドの描写を行うための、カーソルの初期位置は `(cX、cY)` 座標で記述され、 `cX` は X 軸上のカーソルの位置であり、`cY` は `cursor` を Y 軸上に移動させる。
+
+<!--
 ##### 4.3.3.1. MoveTo Command
+-->
 
+##### 4.3.3.1. MoveTo コマンド
+
+<!--
 A `MoveTo` command with a command count of `n` MUST be immediately followed by `n` pairs of `ParameterInteger`s. Each pair `(dX, dY)`:
+-->
 
+コマンド回数 `n` を持つ `MoveTo` コマンドは、`ParameterInteger` の `n` の値の直後に続かなければならない (MUST)。
+
+<!--
 1. Defines the coordinate `(pX, pY)`, where `pX = cX + dX` and `pY = cY + dY`.
    * Within POINT geometries, this coordinate defines a new point.
    * Within LINESTRING geometries, this coordinate defines the starting vertex of a new line.
    * Within POLYGON geometries, this coordinate defines the starting vertex of a new linear ring.
 2. Moves the cursor to `(pX, pY)`.
+-->
 
+1. `pX = cX + dX` と `pY = cY + dY` で、`(pX, pY)` を座標を定義する。
+   * POINT ジオメトリ内のこの座標は新しいポイントを定義する。
+   * LINESTRING ジオメトリ内のこの座標は新しい行の開始頂点を定義する。
+   * POLYGON ジオメトリ内のこの座標は新しい線形リングの開始頂点を定義する。
+2. カーソルを `(pX, pY)` に移動する。
+
+<!--
 ##### 4.3.3.2. LineTo Command
+-->
 
+##### 4.3.3.2. LineTo コマンド
+
+<!--
 A `LineTo` command with a command count of `n` MUST be immediately followed by `n` pairs of `ParameterInteger`s. Each pair `(dX, dY)`:
+-->
 
+コマンド回数 `n` を持つ `LineTo` コマンドは、`ParameterInteger` の `n` の値の直後に続かなければならない (MUST)。
+
+<!--
 1. Defines a segment beginning at the cursor `(cX, cY)` and ending at the coordinate `(pX, pY)`, where `pX = cX + dX` and `pY = cY + dY`.
    * Within LINESTRING geometries, this segment extends the current line.
    * Within POLYGON geometries, this segment extends the current linear ring.
 2. Moves the cursor to `(pX, pY)`.
+-->
 
+1. `pX = cX + dX` と `pY = cY + dY` で、`(cX, cY)` で始まり `(pX, pY)` で終わるセグメントを定義する。
+   * LINESTRING ジオメトリ内のこのセグメントは現在の行を拡張する。
+   * POLYGON ジオメトリ内のこのセグメントは現在の線形リングを拡張する。
+2. カーソルを `(pX, pY)` に移動する。
+
+<!--
 For any pair of `(dX, dY)` the `dX` and `dY` MUST NOT both be `0`.
+-->
 
+`(dX, dY)` の `dX` と `dY` のペアは、どちらも 0 であってはならない (MUST NOT)。
+
+<!--
 ##### 4.3.3.3. ClosePath Command
+-->
 
+##### 4.3.3.3. ClosePath コマンド
+
+<!--
 A `ClosePath` command MUST have a command count of 1 and no parameters. The command closes the current linear ring of a POLYGON geometry via a line segment beginning at the cursor `(cX, cY)` and ending at the starting vertex of the current linear ring.
+-->
 
+`ClosePath` コマンドは、パラメータなし及びコマンドカウント 1 を値として持たなくてはならない (MUST)。このコマンドは、カーソル `(cX、cY)`で始まり、現在の線形リングの開始頂点で終わる線分を介して POLYGON ジオメトリの現在の線形リングを閉じる。
+
+<!--
 This command does not change the cursor position.
+-->
+
+このコマンドは、カーソル位置を変更しない。
 
 #### 4.3.4. Geometry Types
 
