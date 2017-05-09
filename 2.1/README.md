@@ -389,16 +389,24 @@ This command does not change the cursor position.
 
 このコマンドは、カーソル位置を変更しない。
 
-#### 4.3.4. Geometry Types
+#### 4.3.4. ジオメトリタイプ
 
+<!--
 The `geometry` field is described in each feature by the `type` field which must be a value in the enum `GeomType`. The following geometry types are supported:
+-->
+
+`geometry` フィールドは、`GeomType` 内に存在する値からなる `type` にて、各フィーチャーに記述されている。
 
 * UNKNOWN
 * POINT
 * LINESTRING
 * POLYGON
 
+<!--
 Geometry collections are not supported.
+-->
+
+ジオメトリコレクションはサポートされていません。
 
 ##### 4.3.4.1. Unknown Geometry Type
 
