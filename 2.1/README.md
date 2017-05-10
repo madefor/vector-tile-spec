@@ -362,7 +362,7 @@ A `LineTo` command with a command count of `n` MUST be immediately followed by `
 
 1. `pX = cX + dX` と `pY = cY + dY` で、`(cX, cY)` で始まり `(pX, pY)` で終わるセグメントを定義する。
    * LINESTRING ジオメトリ内のこのセグメントは現在の行を拡張する。
-   * POLYGON ジオメトリ内のこのセグメントは現在の線形リングを拡張する。
+   * POLYGON ジオメトリ内のこのセグメントは現在の linear ring を拡張する。
 2. カーソルを `(pX, pY)` に移動する。
 
 <!--
@@ -381,13 +381,17 @@ For any pair of `(dX, dY)` the `dX` and `dY` MUST NOT both be `0`.
 A `ClosePath` command MUST have a command count of 1 and no parameters. The command closes the current linear ring of a POLYGON geometry via a line segment beginning at the cursor `(cX, cY)` and ending at the starting vertex of the current linear ring.
 -->
 
-`ClosePath` コマンドは、パラメータなし及びコマンドカウント 1 を値として持たなくてはならない (MUST)。このコマンドは、カーソル `(cX、cY)`で始まり、現在の線形リングの開始頂点で終わる線分を介して POLYGON ジオメトリの現在の線形リングを閉じる。
+`ClosePath` コマンドは、パラメータなし及びコマンドカウント 1 を値として持たなくてはならない (MUST)。このコマンドは、カーソル `(cX、cY)`で始まり、現在の linear ring の開始頂点で終わる線分を介して POLYGON ジオメトリの現在の線形リングを閉じる。
 
 <!--
 This command does not change the cursor position.
 -->
 
 このコマンドは、カーソル位置を変更しない。
+
+<!--
+#### 4.3.4. Geometry Types
+-->
 
 #### 4.3.4. ジオメトリタイプ
 
@@ -408,47 +412,125 @@ Geometry collections are not supported.
 
 ジオメトリコレクションはサポートされていません。
 
+<!--
 ##### 4.3.4.1. Unknown Geometry Type
+-->
 
+##### 4.3.4.1. 未知のジオメトリタイプ
+
+<!--
 The specification purposefully leaves an unknown geometry type as an option. This geometry type encodes experimental geometry types that an encoder MAY choose to implement. Decoders MAY ignore any features of this geometry type.
+-->
 
+この仕様では、オプションとして意図的に未知のジオメトリタイプが残されています。このジオメトリタイプは、実験的なジオメトリタイプをエンコーダがエンコードすることもできる。デコーダはこのジオメトリタイプの特徴を無視してもよい (MAY)。
+
+<!--
 ##### 4.3.4.2. Point Geometry Type
+-->
 
+##### 4.3.4.2. POINT ジオメトリタイプ
+
+<!--
 The `POINT` geometry type encodes a point or multipoint geometry. The geometry command sequence for a point geometry MUST consist of a single `MoveTo` command with a command count greater than 0.
 
 If the `MoveTo` command for a `POINT` geometry has a command count of 1, then the geometry MUST be interpreted as a single point; otherwise the geometry MUST be interpreted as a multipoint geometry, wherein each pair of `ParameterInteger`s encodes a single point.
+-->
 
+`POINT`ジオメトリタイプはポイントまたはマルチポイントジオメトリをエンコードする。 ポイントジオメトリのジオメトリコマンドシーケンスは、コマンドカウントが 0 より大きい単一の `MoveTo` コマンドで構成されなければならない (MUST)。
+
+`POINT` ジオメトリの `MoveTo` コマンドが 1 のコマンドカウントを持つ場合、ジオメトリは単一ポイントとして解釈されなくてはならない (MUST)。 さもなければ、ジオメトリはマルチポイントジオメトリとして解釈されなければならない (MUST)。ここでは、 `ParameterInteger` の各ペアは単一のポイントをエンコードする。
+
+<!--
 ##### 4.3.4.3. Linestring Geometry Type
+-->
 
+##### 4.3.4.3. Linestring ジオメトリ
+
+<!--
 The `LINESTRING` geometry type encodes a linestring or multilinestring geometry. The geometry command sequence for a linestring geometry MUST consist of one or more repetitions of the following sequence:
+-->
 
+`LINESTRING` ジオメトリタイプは、linestring または multilinestring ジオメトリをエンコードする。linestring ジオメトリのジオメトリコマンドシーケンスは、次のシーケンスの 1 つ以上の反復で構成されなければならない  (MUST):
+
+<!--
 1. A `MoveTo` command with a command count of 1
 2. A `LineTo` command with a command count greater than 0
+-->
 
+1. `MoveTo` コマンド及び １ のコマンドカウント
+2. `LineTo` コマンド及び 0 よりも大きいコマンドカウント
+
+<!--
 If the command sequence for a `LINESTRING` geometry type includes only a single `MoveTo` command then the geometry MUST be interpreted as a single linestring; otherwise the geometry MUST be interpreted as a multilinestring geometry, wherein each `MoveTo` signals the beginning of a new linestring.
+-->
 
+`LINESTRING` ジオメトリタイプのコマンドシーケンスが単一の `MoveTo` コマンドのみを含む場合、ジオメトリは単一の linestring として解釈されなければならない (MUST)。それ以外の場合は、ジオメトリを multilinestring ジオメトリとして解釈しなければならない (MUST)。それぞれの `MoveTo` は、新しい linestring 開始のきっかけとなる。
+
+<!--
 ##### 4.3.4.4. Polygon Geometry Type
+-->
 
+##### 4.3.4.4. Polygon ジオメトリタイプ
+
+<!--
 The `POLYGON` geometry type encodes a polygon or multipolygon geometry, each polygon consisting of exactly one exterior ring that contains zero or more interior rings. The geometry command sequence for a polygon consists of one or more repetitions of the following sequence:
+-->
 
+`POLYGON` ジオメトリタイプは、polygon または multipolygon ジオメトリをエンコードする。それぞれの polygon は、確実に 0 またはそれ以上の内部境界を含む 1 つの外部境界から構成される。Polygon のジオメトリコマンドシーケンスは、次のシーケンスの 1 回以上の繰り返しから構成される。
+
+<!--
 1. An `ExteriorRing`
 2. Zero or more `InteriorRing`s
+-->
 
+1. 単一の `ExteriorRing`
+2. 0 またはそれ以上の `InteriorRing`
+
+<!--
 Each `ExteriorRing` and `InteriorRing` MUST consist of the following sequence:
+-->
 
+それぞれの `ExteriorRing` と `InteriorRing` は、以下のシーケンスから構成されなければならない。
+
+<!--
 1. A `MoveTo` command with a command count of 1
 2. A `LineTo` command with a command count greater than 1
 3. A `ClosePath` command
+-->
 
+1. 単一の `MoveTo` コマンド及び 1 のコマンドカウント
+2. 単一の `LineTo` コマンド及び 1 以上のコマンドカウント
+3. 単一の `ClosePath` コマンド
+
+<!--
 An exterior ring is DEFINED as a linear ring having a positive area as calculated by applying the [surveyor's formula](https://en.wikipedia.org/wiki/Shoelace_formula) to the vertices of the polygon in tile coordinates. In the tile coordinate system (with the Y axis positive down and X axis positive to the right) this makes the exterior ring's winding order appear clockwise.
+-->
 
+外部境界は、linear ring として定義される。この linear ring は、[surveyor's formula](https://en.wikipedia.org/wiki/Shoelace_formula) をタイル座標のポリゴンの頂点に適用することによって計算される正のエリアをもつ。タイル座標系（Y 軸が下向きの正方向、X 軸が右向きの正方向）では、これにより外部境界の線の順序が時計回りになる。
+
+<!--
 An interior ring is DEFINED as a linear ring having a negative area as calculated by applying the [surveyor's formula](https://en.wikipedia.org/wiki/Shoelace_formula) to the vertices of the polygon in tile coordinates. In the tile coordinate system (with the Y axis positive down and X axis positive to the right) this makes the interior ring's winding order appear counterclockwise.
+-->
 
+内部境界は、この linear ring は、[surveyor's formula](https://en.wikipedia.org/wiki/Shoelace_formula) をタイル座標のポリゴンの頂点に適用することによって計算される負のエリアをもつ。タイル座標系（Y 軸が下向きの正方向、X 軸が右向きの正方向）では、これにより外部境界の線の順序が反時計回りになる。
+
+<!--
 If the command sequence for a `POLYGON` geometry type includes only a single exterior ring then the geometry MUST be interpreted as a single polygon; otherwise the geometry MUST be interpreted as a multipolygon geometry, wherein each exterior ring signals the beginning of a new polygon. If a polygon has interior rings they MUST be encoded directly after the exterior ring of the polygon to which they belong.
+-->
 
+`POLYGON` ジオメトリタイプのコマンドシーケンスが単一の外部境界のみを含んでいる場合、そのジオメトリは単一のポリゴンとして解釈されなければならない (MUST)。そうでなければ、そのジオメトリは multipolygon ジオメトリとして解釈されなければならない (MUST)。外部境界
+
+<!--
 Linear rings MUST be geometric objects that have no anomalous geometric points, such as self-intersection or self-tangency. The position of the cursor before calling the `ClosePath` command of a linear ring SHALL NOT repeat the same position as the first point in the linear ring as this would create a zero-length line segment. A linear ring SHOULD NOT have an area calculated by the surveyor's formula equal to zero, as this would signify a ring with anomalous geometric points.
+-->
 
+Linear rings は、self-intersection や self-tangency などの変則なジオメトリックポイントを持たないジオメトリックオブジェクトであるべきである。linear ring の `ClosePath` コマンドを呼び出す前のカーソル位置は、長さが 0 にならないようにするために linear ring の最初の点と同じ位置になることはない (SHALL NOT)。
+
+<!--
 Polygon geometries MUST NOT have any interior rings that intersect and interior rings MUST be enclosed by the exterior ring.
+-->
+
+Polygon ジオメトリは、交差する内部境界を持ってはならない (MUST NOT)。内部境界を外部境界で囲まなければならない (MUST)。
 
 #### 4.3.5. Example Geometry Encodings
 
