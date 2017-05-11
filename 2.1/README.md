@@ -532,15 +532,31 @@ Polygon geometries MUST NOT have any interior rings that intersect and interior 
 
 Polygon ジオメトリは、交差する内部境界を持ってはならない (MUST NOT)。内部境界を外部境界で囲まなければならない (MUST)。
 
+<!--
 #### 4.3.5. Example Geometry Encodings
+-->
 
+#### 4.3.5. ジオメトリエンコーディングの例
+
+<!--
 ##### 4.3.5.1. Example Point
+-->
 
+##### 4.3.5.1. Point の例
+
+<!--
 An example encoding of a point located at:
+-->
+
+Point のエンコーディングの例:
 
 * (25,17)
 
+<!--
 This would require a single command:
+-->
+
+これは以下の単一のコマンドを必要とする:
 
 * MoveTo(+25, +17)
 
@@ -552,14 +568,26 @@ Encoded as: [ 9 50 34 ]
               `> [00001 001] = command id 1 (MoveTo), command count 1
 ```
 
+<!--
 ##### 4.3.5.2. Example Multi Point
+-->
 
+##### 4.3.5.2. マルチポイントの例
+
+<!--
 An example encoding of two points located at:
+-->
+
+2つのポイントのエンコーディングの例:
 
 * (5,7)
 * (3,2)
 
+<!--
 This would require two commands:
+-->
+
+これは2つのコマンドを必要とする:
 
 * MoveTo(+5,+7)
 * MoveTo(-2,-5)
@@ -575,15 +603,23 @@ Encoded as: [ 17 10 14 3 9 ]
                `> [00010 001] = command id 1 (MoveTo), command count 2
 ```
 
+<!--
 ##### 4.3.5.3. Example Linestring
+-->
 
+##### 4.3.5.3. Linestring の例
+
+<!--
 An example encoding of a line with the points:
+-->
+
+点による線のエンコーディングの例:
 
 * (2,2)
 * (2,10)
 * (10,10)
 
-This would require three commands:
+これは3つのコマンドを必要とする:
 
 * MoveTo(+2,+2)
 * LineTo(+0,+8)
@@ -598,9 +634,17 @@ Encoded as: [ 9 4 4 18 0 16 16 0 ]
               `> [00001 001] = command id 1 (MoveTo), command count 1
 ```
 
+<!--
 ##### 4.3.5.4. Example Multi Linestring
+-->
 
+##### 4.3.5.4. Multi Linestring の例
+
+<!--
 An example encoding of two lines with the points:
+-->
+
+点による2本の線のエンコーディングの例:
 
 * Line 1:
   * (2,2)
@@ -610,7 +654,11 @@ An example encoding of two lines with the points:
   * (1,1)
   * (3,5)
 
+<!--
 This would require the following commands:
+-->
+
+これは以下のコマンドを必要とする:
 
 * MoveTo(+2,+2)
 * LineTo(+0,+8)
@@ -631,16 +679,28 @@ Encoded as: [ 9 4 4 18 0 16 16 0 9 17 17 10 4 8 ]
               `> [00001 001] = command id 1 (MoveTo), command count 1
 ```
 
+<!--
 ##### 4.3.5.5. Example Polygon
+-->
 
+##### 4.3.5.5. ポリゴンの例
+
+<!--
 An example encoding of a polygon feature that has the points:
+-->
+
+複数の点をもつポリゴンをエンコーディングする例
 
 * (3,6)
 * (8,12)
 * (20,34)
 * (3,6) *Path Closing as Last Point*
 
+<!--
 Would encoded by using the following commands:
+-->
+
+これは以下のコマンドでエンコードされる:
 
 * MoveTo(3, 6)
 * LineTo(5, 6)
