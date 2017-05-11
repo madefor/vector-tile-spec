@@ -689,7 +689,7 @@ Encoded as: [ 9 4 4 18 0 16 16 0 9 17 17 10 4 8 ]
 An example encoding of a polygon feature that has the points:
 -->
 
-複数の点をもつポリゴンをエンコーディングする例
+複数の点をもつポリゴンをエンコーディングする例:
 
 * (3,6)
 * (8,12)
@@ -717,9 +717,17 @@ Encoded as: [ 9 6 12 18 10 12 24 44 15 ]
               `> [00001 001] = command id 1 (MoveTo), command count 1
 ```
 
+<!--
 ##### 4.3.5.6. Example Multi Polygon
+-->
 
+##### 4.3.5.6. マルチポリゴンの例
+
+<!--
 An example of a more complex encoding of two polygons, one with a hole. The position of the points for the polygons are shown below. The winding order of the polygons is VERY important in this example as it signifies the difference between interior rings and a new polygon.
+-->
+
+2つのポリゴンを使用したより複雑なエンコーディングの例で一つは穴が開いている。ポリゴンの点の位置は以下のとおりである。この例では内部境界と新しいポリゴンの違いを表すためにポリゴンの巻き順が重要である。
 
 * Polygon 1:
   * Exterior Ring:
@@ -742,7 +750,11 @@ An example of a more complex encoding of two polygons, one with a hole. The posi
     * (17,13)
     * (13,13) *Path Closing as Last Point*
 
+<!--
 This polygon would be encoded with the following set of commands:
+-->
+
+このポリゴンは以下のコマンドの組み合わせによってエンコードされる。
 
 * MoveTo(+0,+0)
 * LineTo(+10,+0)
@@ -760,13 +772,29 @@ This polygon would be encoded with the following set of commands:
 * LineTo(+0,-4) // Cursor at 17,13
 * ClosePath // This is an interior ring because area is negative!
 
+<!--
 ### 4.4. Feature Attributes
+-->
 
+### 4.4. 地物の属性
+
+<!--
 Feature attributes are encoded as pairs of integers in the `tag` field of a feature. The first integer in each pair represents the zero-based index of the key in the `keys` set of the `layer` to which the feature belongs. The second integer in each pair represents the zero-based index of the value in the `values` set of the `layer` to which the feature belongs. Every key index MUST be unique within that feature such that no other attribute pair within that feature has the same key index. A feature MUST have an even number of `tag` fields. A feature `tag` field MUST NOT contain a key index or value index greater than or equal to the number of elements in the layer's `keys` or `values` set, respectively.
+-->
 
+地物の属性は、地物の `tag` フィールド内の数字のペアによってエンコードされる。各ペアの最初の整数は地物が属する `layer` の `keys` セットのキーの 0 から始まるインデックスを表す。各ペアの第二の整数は、地物が属する `layer` の `values` セット内の 0 から始まるインデックスを表す。すべてのキーインデックスは、その地物内の他の属性のペアが同じキーインデックスを持たないように、その地物内で一意でなければならない。地物は偶数の `tag` フィールドを持たなければならない (MUST)。地物の `tag` フィールドはレイヤーの `keys` または `values` セットの要素の数以上のキーインデックスまたは値インデックスを含んではならない (MUST NOT)。
+
+<!--
 ### 4.5. Example
+-->
 
+### 4.5. 例
+
+<!--
 For example, a GeoJSON feature like:
+-->
+
+たとえば以下のような GeoJSON では:
 
 ```json
 {
@@ -805,7 +833,7 @@ For example, a GeoJSON feature like:
 }
 ```
 
-Could be structured like:
+以下のような構造となる:
 
 ```js
 layers {
@@ -854,4 +882,8 @@ layers {
 }
 ```
 
+<!--
 Keep in mind the exact values for the geometry would differ based on the projection and extent of the tile.
+-->
+
+ジオメトリの正確な値は、タイルの投影法および領域によって異なる。
