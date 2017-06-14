@@ -275,7 +275,7 @@ A command ID specifies one of the following commands:
 Commands requiring parameters are followed by a `ParameterInteger` for each parameter required by that command. The number of `ParameterIntegers` that follow a `CommandInteger` is equal to the parameter count of a command multiplied by the command count of the `CommandInteger`. For example, a `CommandInteger` with a `MoveTo` command with a command count of 3 will be followed by 6 `ParameterIntegers`.
 -->
 
-パラメータを必要とするコマンドの後には、そのコマンドで必要とされる各パラメータのための `ParameterInteger` がつづく。`CommandInteger` につづく `ParameterIntegers`の数は、 `CommandInteger` のコマンドカウントを掛けたコマンドのパラメータ数に等しい。たとえば、コマンドカウントが3の `MoveTo` コマンドを含む `CommandInteger` の後に6つの `ParameterIntegers` が続きます。
+パラメータを必要とするコマンドの後には、そのコマンドで必要とされる各パラメータのための `ParameterInteger` がつづく。`CommandInteger` につづく `ParameterIntegers`の数は、 `CommandInteger` のコマンドカウントを掛けたコマンドのパラメータ数に等しい。たとえば、コマンドカウントが3の `MoveTo` コマンドを含む `CommandInteger` の後に6つの `ParameterIntegers` が続く。
 
 <!--
 A `ParameterInteger` is [zigzag](https://developers.google.com/protocol-buffers/docs/encoding#types) encoded so that small negative and positive values are both encoded as small integers. To encode a parameter value to a `ParameterInteger` the following formula is used:
@@ -410,7 +410,7 @@ The `geometry` field is described in each feature by the `type` field which must
 Geometry collections are not supported.
 -->
 
-ジオメトリコレクションはサポートされていません。
+ジオメトリコレクションはサポートされていない。
 
 <!--
 ##### 4.3.4.1. Unknown Geometry Type
@@ -422,13 +422,13 @@ Geometry collections are not supported.
 The specification purposefully leaves an unknown geometry type as an option. This geometry type encodes experimental geometry types that an encoder MAY choose to implement. Decoders MAY ignore any features of this geometry type.
 -->
 
-この仕様では、オプションとして意図的に未知のジオメトリタイプが残されています。このジオメトリタイプは、実験的なジオメトリタイプをエンコーダがエンコードすることもできる。デコーダはこのジオメトリタイプの特徴を無視してもよい (MAY)。
+この仕様では、オプションとして意図的に未知のジオメトリタイプが残されている。このジオメトリタイプは、実験的なジオメトリタイプをエンコーダがエンコードすることもできる。デコーダはこのジオメトリタイプの特徴を無視してもよい (MAY)。
 
 <!--
 ##### 4.3.4.2. Point Geometry Type
 -->
 
-##### 4.3.4.2. POINT ジオメトリタイプ
+##### 4.3.4.2. Point ジオメトリタイプ
 
 <!--
 The `POINT` geometry type encodes a point or multipoint geometry. The geometry command sequence for a point geometry MUST consist of a single `MoveTo` command with a command count greater than 0.
@@ -518,7 +518,7 @@ An interior ring is DEFINED as a linear ring having a negative area as calculate
 If the command sequence for a `POLYGON` geometry type includes only a single exterior ring then the geometry MUST be interpreted as a single polygon; otherwise the geometry MUST be interpreted as a multipolygon geometry, wherein each exterior ring signals the beginning of a new polygon. If a polygon has interior rings they MUST be encoded directly after the exterior ring of the polygon to which they belong.
 -->
 
-`POLYGON` ジオメトリタイプのコマンドシーケンスが単一の外部境界のみを含んでいる場合、そのジオメトリは単一のポリゴンとして解釈されなければならない (MUST)。そうでなければ、そのジオメトリは multipolygon ジオメトリとして解釈されなければならない (MUST)。外部境界
+`POLYGON` ジオメトリタイプのコマンドシーケンスが単一の外部境界のみを含んでいる場合、そのジオメトリは単一のポリゴンとして解釈されなければならない (MUST)。そうでなければ、そのジオメトリは multipolygon ジオメトリとして解釈されなければならない (MUST)。その場合、それぞれの外部境界が出現することがあ新しいポリゴンの開始を意味する。ポリゴンが内部境界を保つ場合、その内部境界はそれが属するポリゴンの外部境界の直後で符号化されなければならない（MUST）。
 
 <!--
 Linear rings MUST be geometric objects that have no anomalous geometric points, such as self-intersection or self-tangency. The position of the cursor before calling the `ClosePath` command of a linear ring SHALL NOT repeat the same position as the first point in the linear ring as this would create a zero-length line segment. A linear ring SHOULD NOT have an area calculated by the surveyor's formula equal to zero, as this would signify a ring with anomalous geometric points.
